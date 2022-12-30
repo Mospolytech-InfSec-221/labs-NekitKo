@@ -1,70 +1,86 @@
 ﻿#include <iostream>
-#include <stack>
+#include <queue>
 
-using std::string;
+using std::queue;
 using std::cout;
 using std::cin;
 using std::endl;
 
-bool checkSym(char sym1, char sym2) {
-	switch (sym1) {
-	case '[':
-		return ']' == sym2;
-	case '(':
-		return ')' == sym2;
-	case '{':
-		return '}' == sym2;
-	default:
-		return false;
-	}
-}
-
-bool check(string s) {
-	std::stack<char> st;
-	for (char sym : s) {
-		if (sym == '(' || sym == '[' || sym == '{') st.push(sym);
-		else if (sym == ')' || sym == ']' || sym == '}') {
-			if (!st.empty() && checkSym(st.top(), sym)) st.pop();
-			else return false;
-		}
-	}
-	if (!st.empty()) {
-		while (!st.empty()) st.pop();
-		return false;
+bool check_prime(unsigned int is_prime) {
+	for (unsigned int i = 2U; i < is_prime; i++) {
+		if (is_prime % i == 0U) return false;
 	}
 	return true;
 }
 
+queue<unsigned int> primes(unsigned int num) {
+	queue<unsigned int> primes_queue;
+	for (unsigned int i = 2U; i <= num; i++) {
+		if (check_prime(i)) primes_queue.push(i);
+	}
+	return primes_queue;
+}
+
+queue<unsigned int> clear_primes(queue<unsigned int> _q, unsigned int num) {
+	queue<unsigned int> cleared_primes;
+	while (!_q.empty()) {
+		if (num % _q.front() == 0) cleared_primes.push(_q.front());
+		_q.pop();
+	}
+	return cleared_primes;
+}
+
+queue<unsigned int> clear235(queue<unsigned int> _queue) {
+	queue<unsigned int> cleared_queue;
+	unsigned int val = 0U;
+	while (!_queue.empty()) {
+		val = _queue.front();
+		if (val != 2U && val != 3U && val != 5) cleared_queue.push(val);
+		_queue.pop();
+	}
+	return cleared_queue;
+}
+
+bool check235(unsigned int num) {
+	queue<unsigned int> prime_mults = clear_primes(primes(num), num);
+	if (prime_mults.size() == 0 || clear235(prime_mults).size() != 0) return false;
+	return true;
+}
+
 int main() {
+	int N = 0, i, num = 2;
 	system("chcp 65001 > nul");
 	int option;
-	string s;
 	while (true) {
 		cout << "Выберите действие:\n"
-			<< "1. Ввести строку\n"
-			<< "2. Вывести строку\n"
-			<< "3. Проверить скобки на правильность встроенным классом стека\n"
-			<< "4. Выход\n"
+			<< "1. Ввести количество\n"
+			<< "2. Выполнить программу\n"
+			<< "3. Выход\n"
 			<< "Ваш выбор: ";
 		cin >> option;
 		switch (option) {
 		case 1:
-			cout << "Введите строку: ";
-			cin >> s;
+			cout << "Введите количество искомых элементов: ";
+			cin >> N;
 			break;
 		case 2:
-			cout << "Строка: " << s << endl;
+			i = 0;
+			while (i < N) {
+				if (check235(num)) {
+					cout << num << " ";
+					i++;
+				}
+				cout << endl;
+				num++;
+			}
 			break;
 		case 3:
-			if (check(s)) cout << "Скобки в строке расставлены верно\n";
-			else cout << "Скобки в строке расставлены неверно\n";
-			break;
-		case 4:
 			return 0;
 		default:
 			break;
 		}
 		system("pause");
 		system("cls");
+		num = 2;
 	}
 }
