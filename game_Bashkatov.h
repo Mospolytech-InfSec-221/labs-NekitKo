@@ -5,15 +5,34 @@
 using std::string; using std::cin; using std::cout; using std::vector;
 class Game_Bashkatov {
 private:
+	enum Structure {
+		statue,church,cathedral,inn,market,farm,tradeguild,
+		barrack,palisade,stable,stoneWall,fortress,stockade,townhall,embassy
+	};
 	struct player {
 		string name;
-		unsigned int cube1, cube2, cube3, gold, wood, stone, token_cube, 
-			token_structures, military_register, risk_cards, win_points;
+		unsigned int cube1, cube2, cube3, cubew, gold, wood, stone, token_cube, 
+			token_structures, military_register, win_points;
 		bool advisorTrF;
+		vector<Structure> str;
 	};
+	struct Advisor {
+		string nameAD;
+		string namePL;
+	};
+	vector<Advisor>Advisor;
 	unsigned int phase, year;
-	vector <unsigned int> advisor;
-	vector <unsigned int> player;
-
-
+	int enemy[5] = { 1,2,3,4,5 };
+	int kolvoigr;
+	vector <player> Pl;
+public:
+	Game_Bashkatov();
+	Game_Bashkatov(const int);
+	Game_Bashkatov(const Game_Bashkatov&);
+	void phase1();
+	void phase3();
+	void phase5();
+	void phase7();
+	void phase8();
+	void defense_level(const char* Ename, int Khelp, player& player);
 };
