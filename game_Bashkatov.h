@@ -43,5 +43,8 @@ public:
 	void phase7();
 	void phase8();
 	bool load(const char*);
+	bool save_game(const char*);
+	void phase246();
+	void phase246_bones();
 	void defense_level(const char* Ename, int Khelp, player& player);
 };

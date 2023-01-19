@@ -269,19 +269,74 @@ void Game_Bashkatov::defense_level(const char* Ename, int Khelp, player& player)
 }
 bool Game_Bashkatov::load(const char* filename)
 {
+	int k = 0;
+	std::ifstream file;
+	std::string line;
+	std::string buf = "";
+	file.open(filename);
+	while (std::getline(file, line))
+	{
+		k++;
+	}
+	file.close();
+
+	file.open(filename);
+	int b = 0;
+	for (int i = 0; i < k; i++)
+	{
+		while (std::getline(file, line))
+		{
+
+			for (int i = 0; i < line.size(); i++)
+			{
+
+			}
+		}
+		for (auto i : Pl)
+		{
+			std::cout << i.name;
+		}
+		file.close();
+		return 1;
+	}
+}
+bool Game_Bashkatov::save_game(const char* filename)
+{
 	std::ofstream f;
+	int k = 0;
+	int* info = new int(kolvoigr);
 	f.open(filename);
 	for (int i = 0; i < kolvoigr; i++)
 	{
-		f << "{" << i + 1 << " " << Pl.at(i).name << " " << Pl.at(i).cube1 << " " << Pl.at(i).cube2 << " "
-			<< Pl.at(i).cube3 << " " << Pl.at(i).cubew << " " << Pl.at(i).gold << " "
-			<< Pl.at(i).wood << " " << Pl.at(i).stone << " " << Pl.at(i).win_points << " "
-			<< Pl.at(i).token_cube << " " << Pl.at(i).token_structures << " " << Pl.at(i).military_register << " ";
+		k = 0;
+		f << i << "["
+			<< Pl.at(i).name << "]["
+			<< Pl.at(i).cube1 << "][" << Pl.at(i).cube2 << "][" << Pl.at(i).cube3 << "]["
+			<< Pl.at(i).cubew << "][" << Pl.at(i).gold << "][" << Pl.at(i).wood << "]["
+			<< Pl.at(i).stone << "][" << Pl.at(i).win_points << "][" << Pl.at(i).token_cube << "]["
+			<< Pl.at(i).token_structures << "][" << Pl.at(i).military_register << "]";
 		for (int j = 0; j < Pl.at(i).str.size(); j++)
 		{
-			f << Pl.at(i).str[j] << " ";
+			f << "[" << Pl.at(i).str[j] << "]";
+			k++;
+
 		}
-		f << "}" << '\n';
+		f << "{" << k << "}";
+		f << '\n';
 	}
+	f.close();
 	return 1;
+
+}
+void Game_Bashkatov::phase246()
+{
+
+}
+void Game_Bashkatov::phase246_bones()
+{
+
+	for (int i = 0; i < kolvoigr; i++)
+	{
+
+	}
 }
